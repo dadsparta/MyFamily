@@ -69,32 +69,17 @@ class _PageControllersState extends State<PageControllers> {
                       const SizedBox(
                         height: 20,
                       ),
-                      Row(
+                      const Row(
                         children: [
-                          GestureDetector(
-                            child: Teg(title: 'Общая'),
-                            onTap: () {
-                              PageControllerModel.Creator = 'Own';
-                            },
-                          ),
-                          const SizedBox(
+                          Teg(title: 'Общая', creator: 'Own'),
+                          SizedBox(
                             width: 10,
                           ),
-                          GestureDetector(
-                            child: Teg(title: 'Ваня'),
-                            onTap: () {
-                              PageControllerModel.Creator = "Male";
-                            },
-                          ),
-                          const SizedBox(
+                          Teg(title: 'Ваня', creator: 'male',),
+                          SizedBox(
                             width: 10,
                           ),
-                          GestureDetector(
-                            child: Teg(title: 'Аня'),
-                            onTap: () {
-                              PageControllerModel.Creator = "Female";
-                            },
-                          ),
+                          Teg(title: 'Аня', creator: 'female',),
                         ],
                       ),
                       const SizedBox(

@@ -25,6 +25,7 @@ class _ItemSampleState extends State<ItemSample> {
   bool _value = false;
 
   String idOfDesire = "";
+  String creator = "Own";
 
   @override
   void initState() {
@@ -35,6 +36,16 @@ class _ItemSampleState extends State<ItemSample> {
 
   late MainPageModel model;
 
+  Color checkCreator(){
+    if (creator == "male") {
+      return cardColor;
+    }
+    if(creator == "female"){
+      return Colors.blue;
+    }
+    return Colors.yellow;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -42,7 +53,7 @@ class _ItemSampleState extends State<ItemSample> {
       height: 75,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color: cardColor,
+        color: checkCreator(),
       ),
       child: ListTile(
         leading: Checkbox(
@@ -70,6 +81,7 @@ class _ItemSampleState extends State<ItemSample> {
                 return const CircularProgressIndicator();
               }
               idOfDesire = snapshot.data![widget.index].id!;
+              creator = snapshot.data![widget.index].creator;
               return Text(
                 snapshot.data![widget.index].title,
                 style: const TextStyle(fontSize: 22),
