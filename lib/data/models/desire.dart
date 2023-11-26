@@ -7,9 +7,10 @@ class Desire {
 
   final String title;
   final String description;
-  late String id;
+  final String creator;
+  String? id;
 
-  Desire({required this.title, required this.description});
+  Desire({required this.title, required this.description, required this.creator});
 
   factory Desire.fromJson(Map<String, dynamic> json) => _$DesireFromJson(json);
 

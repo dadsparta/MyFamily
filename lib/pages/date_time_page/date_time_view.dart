@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:myfamily/utilities/consts/colors.dart';
 
+import '../../utilities/consts/texts.dart';
+
 class DateTimePView extends StatefulWidget {
   const DateTimePView({Key? key}) : super(key: key);
 
@@ -35,10 +37,11 @@ class _DateTimePViewState extends State<DateTimePView> {
         child: ListView(
           padding: const EdgeInsets.all(14),
           children: [
+            const SizedBox(height: 40),
+            Image.asset('assets/tokyo.png'),
             const SizedBox(height: 20),
-            Text(
-              difference,
-              textAlign: TextAlign.center,
+            DateTimeText(
+              text: difference,
             ),
           ],
         ),

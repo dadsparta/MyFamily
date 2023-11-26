@@ -21,6 +21,8 @@ class _MainPageViewState extends State<MainPageView> {
     super.initState();
     model = MainPageModel(firestore: widget.instance, state: this);
     model.initState();
+    model.mainService.getDesires();
+
   }
 
   @override
@@ -35,7 +37,7 @@ class _MainPageViewState extends State<MainPageView> {
           ),
           Align(
             alignment: Alignment.center,
-            child: TitleText(text: 'Общая'),
+            child: TitleText(text: 'Желания'),
           ),
           const SizedBox(
             height: 20,
@@ -55,6 +57,7 @@ class _MainPageViewState extends State<MainPageView> {
               return ItemSample(
                 text: '1',
                 instance: model.firestore,
+                index: index,
               );
             },
             separatorBuilder: (context, index) {
@@ -62,7 +65,7 @@ class _MainPageViewState extends State<MainPageView> {
                 height: 20,
               );
             },
-            itemCount:  model.getCountOfDesires(),
+            itemCount: model.mainService.ListOfDiseres.length,
           ),
         ],
       ),

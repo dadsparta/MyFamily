@@ -1,35 +1,42 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:myfamily/data/models/desire.dart';
 import 'package:myfamily/pages/date_time_page/date_time_view.dart';
 import 'package:myfamily/pages/main_page/main_page_model.dart';
 import 'package:myfamily/pages/main_page/main_page_view.dart';
+import 'package:myfamily/pages/page_controller/page_controller_model.dart';
 import 'package:myfamily/utilities/consts/texts.dart';
 import 'package:myfamily/utilities/samples/teg.dart';
 
-import '../utilities/consts/colors.dart';
+import '../../utilities/consts/colors.dart';
 
-class PageControllerModel extends StatefulWidget {
-  PageControllerModel({Key? key, required this.instance}) : super(key: key);
+class PageControllers extends StatefulWidget {
+  PageControllers({Key? key, required this.instance}) : super(key: key);
   FirebaseFirestore instance;
 
   @override
-  State<PageControllerModel> createState() => _PageControllerModelState();
+  State<PageControllers> createState() => _PageControllersState();
 }
 
-class _PageControllerModelState extends State<PageControllerModel> {
-
+class _PageControllersState extends State<PageControllers> {
   Widget? pageWidget;
   bool isTuped = false;
   int currentIndexNavBar = 0;
   late MainPageModel model;
+  PageControllerModel pageControllerModel = PageControllerModel();
 
   @override
   void initState() {
     super.initState();
     model = MainPageModel(firestore: widget.instance, state: this);
     model.initState();
+    Timer.periodic(Duration(seconds: 1), (Timer t) {
+      model.mainService.getDesires();
+    });
   }
 
   @override
@@ -62,33 +69,51 @@ class _PageControllerModelState extends State<PageControllerModel> {
                       const SizedBox(
                         height: 20,
                       ),
-                      const Row(
+                      Row(
                         children: [
-                          Teg(title: 'Общая'),
-                          SizedBox(
+                          GestureDetector(
+                            child: Teg(title: 'Общая'),
+                            onTap: () {
+                              PageControllerModel.Creator = 'Own';
+                            },
+                          ),
+                          const SizedBox(
                             width: 10,
                           ),
-                          Teg(title: 'Ваня'),
-                          SizedBox(
+                          GestureDetector(
+                            child: Teg(title: 'Ваня'),
+                            onTap: () {
+                              PageControllerModel.Creator = "Male";
+                            },
+                          ),
+                          const SizedBox(
                             width: 10,
                           ),
-                          Teg(title: 'Аня'),
+                          GestureDetector(
+                            child: Teg(title: 'Аня'),
+                            onTap: () {
+                              PageControllerModel.Creator = "Female";
+                            },
+                          ),
                         ],
                       ),
                       const SizedBox(
                         height: 20,
                       ),
-                      const TextField(
-                        decoration: InputDecoration(
+                      Text(PageControllerModel.titleController.text),
+                      TextField(
+                        decoration: const InputDecoration(
                             hintText: 'Введите название желания...'),
+                        controller: PageControllerModel.titleController,
                       ),
                       const SizedBox(
                         height: 20,
                       ),
-                      const TextField(
-                        decoration: InputDecoration(
+                      TextField(
+                        decoration: const InputDecoration(
                             hintText: 'Введите описание желания...'),
                         maxLines: 4,
+                        controller: PageControllerModel.descriptionController,
                       ),
                       const SizedBox(
                         height: 20,
@@ -98,9 +123,17 @@ class _PageControllerModelState extends State<PageControllerModel> {
                           elevation: 0.0,
                           backgroundColor: cardColor,
                         ),
-                        onPressed: () {},
-                        child: Text('Отправить'),
-                      )
+                        onPressed: () {
+                          setState(() {});
+                          model.addDesire(
+                            PageControllerModel.titleController.text,
+                            PageControllerModel.descriptionController.text,
+                            PageControllerModel.Creator
+                          );
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Отправить'),
+                      ),
                     ],
                   ),
                 ),
@@ -109,7 +142,7 @@ class _PageControllerModelState extends State<PageControllerModel> {
           );
         },
         backgroundColor: secondColor,
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: secondColor,
@@ -118,11 +151,10 @@ class _PageControllerModelState extends State<PageControllerModel> {
         items: const [
           BottomNavigationBarItem(
               icon: Icon(Icons.account_balance, color: firstColor),
-              label: 'Общая'),
+              label: 'Желания'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.man, color: firstColor), label: 'Ваня'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.woman, color: firstColor), label: 'Аня'),
+              icon: Icon(CupertinoIcons.heart_fill, color: firstColor),
+              label: 'Время'),
         ],
         currentIndex: currentIndexNavBar,
         onTap: (value) {
@@ -132,13 +164,18 @@ class _PageControllerModelState extends State<PageControllerModel> {
               currentIndexNavBar = value;
               switch (value) {
                 case 0:
-                  pageWidget = MainPageView(instance: model.firestore,);
+                  setState(() {
+                    pageWidget = MainPageView(
+                      instance: model.firestore,
+                    );
+                  });
                   break;
                 case 1:
-                 pageWidget = DateTimePView();
+                  setState(() {
+                    pageWidget = DateTimePView();
+                  });
                   break;
                 default:
-                  pageWidget = MainPageView(instance: model.firestore,);
               }
             },
           );

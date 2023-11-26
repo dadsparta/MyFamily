@@ -1,13 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:myfamily/pages/page_controller/page_controller_model.dart';
 
 import '../../data/models/desire.dart';
 import '../../pages/main_page/main_page_model.dart';
 import '../consts/colors.dart';
 
 class ItemSample extends StatefulWidget {
-  ItemSample({Key? key, required this.text, required this.instance})
+  ItemSample(
+      {Key? key,
+      required this.text,
+      required this.instance,
+      required this.index})
       : super(key: key);
+  int index;
   String text;
   final FirebaseFirestore instance;
 
@@ -17,6 +23,8 @@ class ItemSample extends StatefulWidget {
 
 class _ItemSampleState extends State<ItemSample> {
   bool _value = false;
+
+  String idOfDesire = "";
 
   @override
   void initState() {
@@ -43,6 +51,13 @@ class _ItemSampleState extends State<ItemSample> {
             setState(() {
               _value = !_value;
             });
+            if (_value) {
+              setState(() {
+                model.mainService.deleteDesire(idOfDesire);
+                model.mainService.getDesires();
+              });
+
+            }
           },
         ),
         title: FutureBuilder<List<Desire>?>(
@@ -54,13 +69,10 @@ class _ItemSampleState extends State<ItemSample> {
                 );
                 return const CircularProgressIndicator();
               }
-              return ListView.builder(
-                itemBuilder: (context, index) {
-                  return Text(
-                    snapshot.data![index].title,
-                    style: TextStyle(fontSize: 22),
-                  );
-                },
+              idOfDesire = snapshot.data![widget.index].id!;
+              return Text(
+                snapshot.data![widget.index].title,
+                style: const TextStyle(fontSize: 22),
               );
             }),
       ),

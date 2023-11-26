@@ -5,23 +5,29 @@ import '../../data/models/desire.dart';
 import '../../utilities/services/main_services.dart';
 
 class MainPageModel {
-  MainPageModel({required this.firestore, required this.state});
+  MainPageModel(
+      {required this.firestore,
+      required this.state});
 
   final FirebaseFirestore firestore;
+
   final State state;
+
+
   late MainServices mainService = MainServices(firestore: firestore);
 
   void initState() {
     mainService = MainServices(firestore: firestore);
   }
 
-  Future<void> addDesire(title, description) async {
-    Desire desire = Desire(title: title, description: description);
-    return mainService.addDesire(desire);
-  }
-
-  int getCountOfDesires(){
-    mainService.getCountOfDesire();
-    return mainService.sizeOfCollection;
+  Future<void> addDesire(String title,String description, String creator) async {
+    if (title.isNotEmpty && description.isNotEmpty) {
+      Desire desire = Desire(
+        title: title,
+        description: description,
+        creator: creator
+      );
+      mainService.addDesire(desire);
+    }
   }
 }
