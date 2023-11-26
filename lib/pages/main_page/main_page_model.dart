@@ -18,6 +18,7 @@ class MainPageModel {
 
   void initState() {
     mainService = MainServices(firestore: firestore);
+    mainService.getDesires();
   }
 
   Future<void> addDesire(String title,String description, String creator) async {

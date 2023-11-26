@@ -6,4 +6,6 @@ class PageControllerModel{
    static TextEditingController descriptionController = TextEditingController();
 
    static String Creator = "male";
+   static int currentIndexNavBar = 0;
+
 }

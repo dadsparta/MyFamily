@@ -10,12 +10,11 @@ class TitleText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: GoogleFonts.museoModerno(
-        fontSize: 32,
-        color: textColor,
-          decoration: TextDecoration.none
-
-      ),
+      style: GoogleFonts.montserrat(
+          fontSize: 32,
+          fontWeight: FontWeight.w700,
+          color: textColor,
+          decoration: TextDecoration.none),
       textAlign: TextAlign.center,
     );
   }
@@ -29,16 +28,31 @@ class DescriptionText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: GoogleFonts.museoModerno(
-          fontSize: 24,
-          color: textColor,
-          decoration: TextDecoration.none
-
+      style: GoogleFonts.montserrat(
+        fontSize: 24,
+        color: textColor,
+        decoration: TextDecoration.none,
       ),
     );
   }
 }
+class DesireSampleText extends StatelessWidget {
+  DesireSampleText({Key? key, required this.text}) : super(key: key);
+  String text;
 
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: GoogleFonts.montserrat(
+        fontSize: 18,
+        fontWeight: FontWeight.w600,
+        color: textColor,
+        decoration: TextDecoration.none,
+      ),
+    );
+  }
+}
 class DateTimeText extends StatelessWidget {
   DateTimeText({Key? key, required this.text}) : super(key: key);
   String text;
@@ -47,7 +61,7 @@ class DateTimeText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: GoogleFonts.museoModerno(
+      style: GoogleFonts.montserrat(
           fontSize: 24, color: textColor, decoration: TextDecoration.none),
       textAlign: TextAlign.center,
     );

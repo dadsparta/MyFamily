@@ -25,7 +25,6 @@ class PageControllers extends StatefulWidget {
 class _PageControllersState extends State<PageControllers> {
   Widget? pageWidget;
   bool isTuped = false;
-  int currentIndexNavBar = 0;
   late MainPageModel model;
   PageControllerModel pageControllerModel = PageControllerModel();
 
@@ -50,85 +49,6 @@ class _PageControllersState extends State<PageControllers> {
       body: Container(
         child: isTuped ? pageWidget : MainPageView(instance: model.firestore),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-            isScrollControlled: true,
-            context: context,
-            builder: (BuildContext context) {
-              return Container(
-                color: firstColor,
-                child: Container(
-                  height: 700,
-                  padding: const EdgeInsets.all(15),
-                  child: ListView(
-                    children: [
-                      TitleText(
-                        text: 'Ваше желание:',
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const Row(
-                        children: [
-                          Teg(title: 'Общая', creator: 'Own'),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Teg(title: 'Ваня', creator: 'male',),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Teg(title: 'Аня', creator: 'female',),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(PageControllerModel.titleController.text),
-                      TextField(
-                        decoration: const InputDecoration(
-                            hintText: 'Введите название желания...'),
-                        controller: PageControllerModel.titleController,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      TextField(
-                        decoration: const InputDecoration(
-                            hintText: 'Введите описание желания...'),
-                        maxLines: 4,
-                        controller: PageControllerModel.descriptionController,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          elevation: 0.0,
-                          backgroundColor: cardColor,
-                        ),
-                        onPressed: () {
-                          setState(() {});
-                          model.addDesire(
-                            PageControllerModel.titleController.text,
-                            PageControllerModel.descriptionController.text,
-                            PageControllerModel.Creator
-                          );
-                          Navigator.pop(context);
-                        },
-                        child: const Text('Отправить'),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          );
-        },
-        backgroundColor: secondColor,
-        child: const Icon(Icons.add),
-      ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: secondColor,
         unselectedItemColor: textColor,
@@ -141,12 +61,12 @@ class _PageControllersState extends State<PageControllers> {
               icon: Icon(CupertinoIcons.heart_fill, color: firstColor),
               label: 'Время'),
         ],
-        currentIndex: currentIndexNavBar,
+        currentIndex: PageControllerModel.currentIndexNavBar,
         onTap: (value) {
           return setState(
             () {
               isTuped = true;
-              currentIndexNavBar = value;
+              PageControllerModel.currentIndexNavBar = value;
               switch (value) {
                 case 0:
                   setState(() {

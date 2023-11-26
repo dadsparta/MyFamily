@@ -10,7 +10,7 @@ class MainServices {
   late final CollectionReference generalCollection = firestore.collection(
       'General');
 
-  List<Desire> ListOfDiseres = [
+  late List<Desire> ListOfDiseres = [
     Desire(title: "загрузка",description: "загрузка", creator: "own"),
 
   ];
