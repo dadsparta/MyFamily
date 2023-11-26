@@ -153,6 +153,8 @@ class _PageControllersState extends State<PageControllers> {
                     pageWidget = MainPageView(
                       instance: model.firestore,
                     );
+                    model.mainService.getDesires();
+
                   });
                   break;
                 case 1:

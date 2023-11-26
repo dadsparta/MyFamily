@@ -10,7 +10,31 @@ class TitleText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: GoogleFonts.museoModerno(fontSize: 32, color: textColor),
+      style: GoogleFonts.museoModerno(
+        fontSize: 32,
+        color: textColor,
+          decoration: TextDecoration.none
+
+      ),
+      textAlign: TextAlign.center,
+    );
+  }
+}
+
+class DescriptionText extends StatelessWidget {
+  DescriptionText({Key? key, required this.text}) : super(key: key);
+  String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: GoogleFonts.museoModerno(
+          fontSize: 24,
+          color: textColor,
+          decoration: TextDecoration.none
+
+      ),
     );
   }
 }
@@ -24,9 +48,7 @@ class DateTimeText extends StatelessWidget {
     return Text(
       text,
       style: GoogleFonts.museoModerno(
-        fontSize: 24,
-        color: textColor
-      ),
+          fontSize: 24, color: textColor, decoration: TextDecoration.none),
       textAlign: TextAlign.center,
     );
   }

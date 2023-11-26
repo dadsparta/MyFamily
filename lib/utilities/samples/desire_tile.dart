@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:myfamily/pages/page_controller/page_controller_model.dart';
+import 'package:myfamily/utilities/samples/desire_tile_detail.dart';
 
 import '../../data/models/desire.dart';
 import '../../pages/main_page/main_page_model.dart';
@@ -27,6 +28,8 @@ class _ItemSampleState extends State<ItemSample> {
   String idOfDesire = "";
   String creator = "Own";
 
+  late MainPageModel model;
+
   @override
   void initState() {
     super.initState();
@@ -34,13 +37,11 @@ class _ItemSampleState extends State<ItemSample> {
     model.initState();
   }
 
-  late MainPageModel model;
-
-  Color checkCreator(){
+  Color checkCreator() {
     if (creator == "male") {
       return cardColor;
     }
-    if(creator == "female"){
+    if (creator == "female") {
       return Colors.blue;
     }
     return Colors.yellow;
@@ -56,6 +57,16 @@ class _ItemSampleState extends State<ItemSample> {
         color: checkCreator(),
       ),
       child: ListTile(
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => DesireTileDetail(
+                  index: widget.index,
+                  text: widget.text,
+                  instance: widget.instance),
+            ),
+          );
+        },
         leading: Checkbox(
           value: _value,
           onChanged: (bool? value) {
@@ -67,7 +78,6 @@ class _ItemSampleState extends State<ItemSample> {
                 model.mainService.deleteDesire(idOfDesire);
                 model.mainService.getDesires();
               });
-
             }
           },
         ),

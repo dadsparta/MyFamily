@@ -22,7 +22,6 @@ class _MainPageViewState extends State<MainPageView> {
     model = MainPageModel(firestore: widget.instance, state: this);
     model.initState();
     model.mainService.getDesires();
-
   }
 
   @override
