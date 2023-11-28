@@ -4,13 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:myfamily/data/models/desire.dart';
 import 'package:myfamily/pages/date_time_page/date_time_view.dart';
 import 'package:myfamily/pages/main_page/main_page_model.dart';
 import 'package:myfamily/pages/main_page/main_page_view.dart';
 import 'package:myfamily/pages/page_controller/page_controller_model.dart';
-import 'package:myfamily/utilities/consts/texts.dart';
-import 'package:myfamily/utilities/samples/teg.dart';
 
 import '../../utilities/consts/colors.dart';
 

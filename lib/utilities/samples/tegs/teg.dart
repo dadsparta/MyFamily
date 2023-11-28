@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:myfamily/pages/page_controller/page_controller_model.dart';
 
-import '../consts/colors.dart';
+import '../../consts/colors.dart';
+
 
 class Teg extends StatefulWidget {
   const Teg({Key? key, required this.title, required this.creator}) : super(key: key);
