@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myfamily/utilities/consts/colors.dart';
 
@@ -26,16 +27,21 @@ class DescriptionText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
+    return SelectableText(
       text,
       style: GoogleFonts.montserrat(
         fontSize: 24,
         color: textColor,
         decoration: TextDecoration.none,
       ),
+      showCursor: true,
+      cursorWidth: 2,
+      cursorRadius: Radius.circular(5),
+      toolbarOptions: ToolbarOptions(copy: true, selectAll: true),
     );
   }
 }
+
 class DesireSampleText extends StatelessWidget {
   DesireSampleText({Key? key, required this.text}) : super(key: key);
   String text;
@@ -53,6 +59,7 @@ class DesireSampleText extends StatelessWidget {
     );
   }
 }
+
 class DateTimeText extends StatelessWidget {
   DateTimeText({Key? key, required this.text}) : super(key: key);
   String text;

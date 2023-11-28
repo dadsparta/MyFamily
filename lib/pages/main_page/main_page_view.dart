@@ -155,6 +155,7 @@ class _MainPageViewState extends State<MainPageView> {
                                       PageControllerModel
                                           .descriptionController.text,
                                       PageControllerModel.Creator);
+                                  PageControllerModel.ClearControllers();
                                   Navigator.pop(context);
                                 },
                                 child: const Text('Отправить'),
