@@ -58,8 +58,102 @@ class _DesireTileDetailState extends State<DesireTileDetail> {
           return const CircularProgressIndicator();
         }
         creator = snapshot.data![widget.index].creator;
+        if (snapshot.data![widget.index].imagePath != "null") {
+          return Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(color: checkCreator()),
+            child: SafeArea(
+              child: ListView(
+                children: [
+                  TitleText(
+                    text: snapshot.data![widget.index].title,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    height: 300,
+                    child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) {
+                                return Scaffold(
+                                  body: GestureDetector(
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Center(
+                                      child: Hero(
+                                        tag: 'imageHero',
+                                        child: Image.network(
+                                          snapshot
+                                              .data![widget.index].imagePath,
+                                          loadingBuilder: (BuildContext context,
+                                              Widget child,
+                                              ImageChunkEvent?
+                                                  loadingProgress) {
+                                            if (loadingProgress == null) {
+                                              return child;
+                                            }
+                                            return Center(
+                                              child: CircularProgressIndicator(
+                                                value: loadingProgress
+                                                            .expectedTotalBytes !=
+                                                        null
+                                                    ? loadingProgress
+                                                            .cumulativeBytesLoaded /
+                                                        loadingProgress
+                                                            .expectedTotalBytes!
+                                                    : null,
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          );
+                        },
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Image.network(
+                            snapshot.data![widget.index].imagePath,
+                            loadingBuilder: (BuildContext context, Widget child,
+                                ImageChunkEvent? loadingProgress) {
+                              if (loadingProgress == null) {
+                                return child;
+                              }
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  value: loadingProgress.expectedTotalBytes !=
+                                          null
+                                      ? loadingProgress.cumulativeBytesLoaded /
+                                          loadingProgress.expectedTotalBytes!
+                                      : null,
+                                ),
+                              );
+                            },
+                          ),
+                        )),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  DescriptionText(
+                    text: snapshot.data![widget.index].description,
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
         return Container(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(color: checkCreator()),
           child: SafeArea(
             child: ListView(
@@ -67,7 +161,9 @@ class _DesireTileDetailState extends State<DesireTileDetail> {
                 TitleText(
                   text: snapshot.data![widget.index].title,
                 ),
-                SizedBox(height: 20,),
+                const SizedBox(
+                  height: 20,
+                ),
                 DescriptionText(
                   text: snapshot.data![widget.index].description,
                 ),

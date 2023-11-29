@@ -30,9 +30,7 @@ class _PageControllersState extends State<PageControllers> {
     super.initState();
     model = MainPageModel(firestore: widget.instance, state: this);
     model.initState();
-    Timer.periodic(Duration(seconds: 1), (Timer t) {
       model.mainService.getDesires();
-    });
   }
 
   @override

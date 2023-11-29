@@ -2,13 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/models/desire.dart';
-import '../../utilities/samples/desire_tile.dart';
+import '../../utilities/samples/desire_tiles/desire_tile.dart';
+import '../../utilities/samples/desire_tiles/desire_tile_female.dart';
+import '../../utilities/samples/desire_tiles/desire_tile_man.dart';
+import '../../utilities/samples/desire_tiles/desire_tile_own.dart';
 import '../../utilities/services/main_services.dart';
 
 class MainPageModel {
-  MainPageModel(
-      {required this.firestore,
-      required this.state});
+  MainPageModel({required this.firestore, required this.state});
 
   static bool isOwnActive = false;
   static bool isManActive = false;
@@ -17,7 +18,6 @@ class MainPageModel {
 
   final State state;
 
-
   late MainServices mainService = MainServices(firestore: firestore);
 
   void initState() {
@@ -25,18 +25,23 @@ class MainPageModel {
     mainService.getDesires();
   }
 
-  Future<void> addDesire(String title,String description, String creator) async {
+  Future<void> addDesire(String title, String description, String creator,
+      String imagePath, String imageId) async {
     if (title.isNotEmpty && description.isNotEmpty) {
       Desire desire = Desire(
-        title: title,
-        description: description,
-        creator: creator
-      );
+          title: title,
+          description: description,
+          creator: creator,
+          imagePath: imagePath,
+          imageId: imageId);
       mainService.addDesire(desire);
     }
   }
 
-  Widget? generatorOfDesire(int index, State state,){
+  Widget? generatorOfDesire(
+    int index,
+    State state,
+  ) {
     if (isOwnActive == true) {
       return DesireOwnSample(
         text: '1',
@@ -45,7 +50,7 @@ class MainPageModel {
         state: state,
       );
     }
-    if(isManActive == true){
+    if (isManActive == true) {
       return DesireManSample(
         text: '1',
         instance: firestore,
@@ -53,15 +58,14 @@ class MainPageModel {
         state: state,
       );
     }
-    if(isWomanActive == true){
+    if (isWomanActive == true) {
       return DesireWomanSample(
         text: '1',
         instance: firestore,
         index: index,
         state: state,
       );
-    }
-    else{
+    } else {
       return DesireSample(
         text: '1',
         instance: firestore,
@@ -69,6 +73,5 @@ class MainPageModel {
         state: state,
       );
     }
-
   }
 }

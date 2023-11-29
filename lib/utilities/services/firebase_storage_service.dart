@@ -9,7 +9,10 @@ class FirebaseStorageService{
   FirebaseStorageService({required this.firebaseStorage});
   final FirebaseStorage firebaseStorage;
 
-  Future<String> sendImage(XFile? _image) async {
+  String imageId = "null";
+  String imageLink = "null";
+
+  Future<void> sendImage(XFile? _image) async {
     String uniqueFileName = "${DateTime
         .now()
         .millisecondsSinceEpoch}.jpg";
@@ -20,13 +23,15 @@ class FirebaseStorageService{
 
     try {
       await referenceToUpload.putFile(File(_image!.path));
-      return await referenceToUpload.getDownloadURL();
+      imageLink = await referenceToUpload.getDownloadURL();
+      return;
     } catch (error) {
       print(error);
     }
 
     referenceToUpload.putFile(File(_image!.path));
-    return "null";
+    imageLink = "null";
+    imageId = "null";
   }
 
 

@@ -4,7 +4,7 @@ import 'package:myfamily/pages/main_page/main_page_model.dart';
 import 'package:myfamily/utilities/consts/colors.dart';
 import 'package:myfamily/utilities/consts/texts.dart';
 import 'package:myfamily/utilities/samples/add_desire_panel.dart';
-import 'package:myfamily/utilities/samples/desire_tile.dart';
+import 'package:myfamily/utilities/samples/desire_tiles/desire_tile.dart';
 import 'package:myfamily/utilities/samples/tegs/filter_teg.dart';
 
 import '../../data/models/desire.dart';

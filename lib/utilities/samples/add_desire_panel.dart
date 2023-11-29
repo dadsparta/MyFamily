@@ -22,6 +22,8 @@ class AddDesirePanel extends StatefulWidget {
 class _AddDesirePanelState extends State<AddDesirePanel> {
   ImagePicker imagePicker = ImagePicker();
   XFile? _image;
+
+
   FirebaseStorageService photoService =
   FirebaseStorageService(firebaseStorage: FirebaseStorage.instance);
 
@@ -150,15 +152,29 @@ class _AddDesirePanelState extends State<AddDesirePanel> {
                         ),
                         onPressed: () async {
                           Navigator.pop(context);
+                          if(_image != null){
+                            await photoService.sendImage(_image);
 
-                          setState(() {});
-                          widget.model.addDesire(
-                              PageControllerModel.titleController.text,
-                              PageControllerModel.descriptionController.text,
-                              PageControllerModel.Creator);
-                          photoService.sendImage(_image);
+                            widget.model.addDesire(
+                                PageControllerModel.titleController.text,
+                                PageControllerModel.descriptionController.text,
+                                PageControllerModel.Creator,
+                                photoService.imageLink,
+                                photoService.imageId
+                            );
+                          }
+                          else{
+                            widget.model.addDesire(
+                                PageControllerModel.titleController.text,
+                                PageControllerModel.descriptionController.text,
+                                PageControllerModel.Creator,
+                                'null',
+                                'null'
+                            );
+                          };
 
                           PageControllerModel.ClearControllers();
+                          _image = null;
                         },
                         child: const Text('Отправить'),
                       ),
