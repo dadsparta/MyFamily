@@ -17,7 +17,9 @@ dependencies:
   firebase_core: ^2.16.0
   cloud_firestore: ^4.9.2
   json_serializable: ^6.7.1
+  image_picker:
   build_runner:
+  firebase_storage: ^11.5.3
 
 dev_dependencies:
   flutter_test:
