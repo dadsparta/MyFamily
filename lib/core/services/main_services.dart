@@ -1,16 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:myfamily/utilities/services/firebase_storage_service.dart';
+import 'package:myfamily/core/services/firebase_storage_service.dart';
 
 import '../../data/models/desire.dart';
 
+
 class MainServices {
+
+  MainServices({required this.firestore});
+
   final FirebaseFirestore firestore;
 
-  late final CollectionReference generalCollection =
-      firestore.collection('General');
+  List<Desire> ListOfmaleDiseres = [];
 
-  late List<Desire> ListOfDiseres = [
+  late final CollectionReference generalCollection =
+  firestore.collection('General');
+
+  List<Desire> ListOfDiseres = [
     Desire(
         title: "загрузка",
         description: "загрузка",
@@ -19,12 +25,20 @@ class MainServices {
         imageId: "null"),
   ];
 
-  MainServices({required this.firestore});
-
   Future<List<Desire>?> getDesires() async {
     var snapshot = await firestore.collection('General').get();
     var docs = snapshot.docs.map((e) => Desire.fromJson(e.data())).toList();
     ListOfDiseres = docs;
+    return docs;
+  }
+
+  Future<List<Desire>?> getMaleDesires() async {
+    var snapshot = await firestore
+        .collection('General')
+        .where('creator', isEqualTo: 'male')
+        .get();
+    var docs = snapshot.docs.map((e) => Desire.fromJson(e.data())).toList();
+    ListOfmaleDiseres = docs;
     return docs;
   }
 
@@ -43,12 +57,12 @@ class MainServices {
   Future<void> deleteDesireWithImage(String id, String refOfImage) async {
     firestore.collection('General').doc(id).delete();
     FirebaseStorageService firebaseStorageService =
-    FirebaseStorageService(firebaseStorage: FirebaseStorage.instance);
-    var firebaseStorageRef = firebaseStorageService.firebaseStorage.refFromURL(refOfImage);
-    try{
+        FirebaseStorageService(firebaseStorage: FirebaseStorage.instance);
+    var firebaseStorageRef =
+        firebaseStorageService.firebaseStorage.refFromURL(refOfImage);
+    try {
       await firebaseStorageRef.delete();
-    }
-    catch(error){
+    } catch (error) {
       print(error);
     }
   }

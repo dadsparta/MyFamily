@@ -19,7 +19,10 @@ dependencies:
   json_serializable: ^6.7.1
   image_picker:
   build_runner:
+  flutter_date_difference: ^1.0.1
   firebase_storage: ^11.5.3
+  get: ^5.0.0-release-candidate-5
+  get_storage: ^2.1.1
 
 dev_dependencies:
   flutter_test:
