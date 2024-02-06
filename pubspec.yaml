@@ -12,21 +12,23 @@ dependencies:
   flutter:
     sdk: flutter
 
+  get: ^5.0.0-release-candidate-5
+  get_storage: ^2.1.1
   google_fonts: ^5.1.0
   cupertino_icons: ^1.0.2
   firebase_core: ^2.16.0
   cloud_firestore: ^4.9.2
-  json_serializable: ^6.7.1
-  image_picker:
-  build_runner:
+  loading_indicator: ^3.1.1
   flutter_date_difference: ^1.0.1
   firebase_storage: ^11.5.3
-  get: ^5.0.0-release-candidate-5
-  get_storage: ^2.1.1
+  image_picker:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  build_runner: ^2.1.7
+  json_serializable: ^6.7.1
   flutter_launcher_icons: ^0.13.1
   flutter_lints: ^2.0.0
   skeleton_text:
@@ -38,5 +40,6 @@ flutter_icons:
 flutter:
   uses-material-design: true
   assets:
-    - assets/
+    - assets/images/
+    - assets/locales/
 

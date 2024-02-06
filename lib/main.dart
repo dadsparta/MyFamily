@@ -15,20 +15,29 @@ Future<void> main() async {
   ]);
   await initInjector();
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
   runApp(
     GetMaterialApp(
       title: "MyFamily",
       getPages: AppPages.routes,
       defaultTransition: Transition.cupertino,
-      initialRoute: Routes.dateTime,
+      initialRoute: Routes.home,
+      builder: (context, page) => GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(
+            FocusNode(),
+          );
+        },
+        child: page ?? const SizedBox.shrink(),
+      ),
       theme: ThemeData(
         useMaterial3: true,
-        scaffoldBackgroundColor: AppColors.firstColor,
         appBarTheme: const AppBarTheme(backgroundColor: AppColors.secondColor),
         dividerTheme: const DividerThemeData(
           color: AppColors.secondColor,
         ),
       ),
+      debugShowCheckedModeBanner: false,
     ),
   );
 }

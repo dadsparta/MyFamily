@@ -72,6 +72,7 @@ class DesireSampleText extends StatelessWidget {
         color: AppColors. textColor,
         decoration: TextDecoration.none,
       ),
+      overflow: TextOverflow.ellipsis,
     );
   }
 }
