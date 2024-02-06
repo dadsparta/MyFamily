@@ -11,7 +11,6 @@ Desire _$DesireFromJson(Map<String, dynamic> json) => Desire(
       description: json['description'] as String,
       creator: json['creator'] as String,
       imagePath: json['imagePath'] as String,
-      imageId: json['imageId'] as String,
     )..id = json['id'] as String?;
 
 Map<String, dynamic> _$DesireToJson(Desire instance) => <String, dynamic>{
@@ -19,6 +18,5 @@ Map<String, dynamic> _$DesireToJson(Desire instance) => <String, dynamic>{
       'description': instance.description,
       'creator': instance.creator,
       'imagePath': instance.imagePath,
-      'imageId': instance.imageId,
       'id': instance.id,
     };

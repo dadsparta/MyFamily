@@ -29,7 +29,7 @@ class DescriptionText extends StatelessWidget {
   Widget build(BuildContext context) {
     return SelectableText(
       text,
-      style: GoogleFonts.montserrat(
+      style: GoogleFonts.pirataOne(
         fontSize: 24,
         color: AppColors.textColor,
         decoration: TextDecoration.none,

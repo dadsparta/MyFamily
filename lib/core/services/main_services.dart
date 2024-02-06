@@ -11,8 +11,6 @@ class MainServices {
 
   final FirebaseFirestore firestore;
 
-  List<Desire> ListOfmaleDiseres = [];
-
   late final CollectionReference generalCollection =
   firestore.collection('General');
 
@@ -21,24 +19,13 @@ class MainServices {
         title: "загрузка",
         description: "загрузка",
         creator: "own",
-        imagePath: "null",
-        imageId: "null"),
+        imagePath: "null"),
   ];
 
   Future<List<Desire>?> getDesires() async {
     var snapshot = await firestore.collection('General').get();
     var docs = snapshot.docs.map((e) => Desire.fromJson(e.data())).toList();
     ListOfDiseres = docs;
-    return docs;
-  }
-
-  Future<List<Desire>?> getMaleDesires() async {
-    var snapshot = await firestore
-        .collection('General')
-        .where('creator', isEqualTo: 'male')
-        .get();
-    var docs = snapshot.docs.map((e) => Desire.fromJson(e.data())).toList();
-    ListOfmaleDiseres = docs;
     return docs;
   }
 

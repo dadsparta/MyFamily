@@ -40,9 +40,6 @@ class HomeView extends GetView<HomeController> {
             },
           ),
         ),
-        floatingActionButton: controller.selectedPageIndex.value == 0
-            ? const AddDesiresButtomsheet()
-            : null,
         bottomNavigationBar: Obx(
           () => BottomNavigationBar(
             onTap: controller.onSelectPage,

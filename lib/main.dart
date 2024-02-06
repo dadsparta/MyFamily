@@ -32,6 +32,7 @@ Future<void> main() async {
       ),
       theme: ThemeData(
         useMaterial3: true,
+        textTheme: TextTheme(bodyMedium: TextStyle(color: AppColors.textColor)),
         appBarTheme: const AppBarTheme(backgroundColor: AppColors.secondColor),
         dividerTheme: const DividerThemeData(
           color: AppColors.secondColor,
