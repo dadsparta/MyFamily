@@ -3,74 +3,110 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:myfamily/app/global_widgets/add_desire_bottomsheet.dart';
+import 'package:myfamily/app/global_widgets/app_tab.dart';
 import 'package:myfamily/app/global_widgets/desire_tile.dart';
 import 'package:myfamily/app/pages/home/tabs/desires/controllers/desires_page_controller.dart';
+import 'package:myfamily/core/consts/colors.dart';
 import 'package:myfamily/core/consts/texts.dart';
 import 'package:myfamily/data/models/desire.dart';
 
 class Desires extends GetView<DesiresController> {
   Desires({super.key});
 
-  List<Desire> desires = [
-    Desire(
-      title: 'Чек',
-      description: "Дескрипшн",
-      creator: 'male',
-      imagePath:
-          'https://firebasestorage.googleapis.com/v0/b/myfamily-d0b0a.appspot.com/o/desires%2F1702159631200.jpg?alt=media&token=4acaf628-6918-4c46-bea3-6358da14688e',
-    ),
-    Desire(
-      title: 'Помидор',
-      description: "ЭТО СУПЕР ДУПЕР ПОМИДОР!!!",
-      creator: 'female',
-      imagePath:
-      'https://firebasestorage.googleapis.com/v0/b/myfamily-d0b0a.appspot.com/o/desires%2F1702159631200.jpg?alt=media&token=4acaf628-6918-4c46-bea3-6358da14688e',
-    )
-  ];
+  Widget generator(Rx<List<Desire>?> listOfDesires) {
+    return Padding(
+      padding: const EdgeInsets.all(14.0),
+      child: ListView(
+        children: [
+          const SizedBox(
+            height: 20,
+          ),
+          const Divider(),
+          const SizedBox(
+            height: 20,
+          ),
+          Obx(() {
+            if (listOfDesires.value == null) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: Colors.red,
+                ),
+              ); // Экран загрузки
+            } else {
+              return ListView.separated(
+                shrinkWrap: true,
+                physics: const BouncingScrollPhysics(),
+                itemBuilder: (context, index) => DesireTile(
+                  desire: listOfDesires.value![index],
+                ),
+                itemCount: listOfDesires.value!.length,
+                separatorBuilder: (BuildContext context, int index) {
+                  return const SizedBox(
+                    height: 20,
+                  );
+                },
+              );
+            }
+          })
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(14, 0, 14, 0),
-      child: SafeArea(
-        child: Stack(
-          alignment: Alignment.bottomRight,
-          children: [
-            ListView(
-              children: [
-                const SizedBox(
-                  height: 20,
+    return DefaultTabController(
+      length: 4,
+      child: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/background.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            bottom: const TabBar(
+              dividerColor: Colors.transparent,
+              indicatorColor: AppColors.cardColor,
+              labelColor: AppColors.cardColor,
+              tabs: [
+                AppTab(
+                  title: 'All',
+                  color: AppColors.togetherColor,
                 ),
-                TitleText(text: "Desires"),
-                const SizedBox(
-                  height: 20,
+                AppTab(
+                  title: 'Our',
+                  color: AppColors.togetherColor,
                 ),
-                const Divider(),
-                const SizedBox(
-                  height: 20,
+                AppTab(
+                  title: 'Hanna',
+                  color: AppColors.femaleColor,
                 ),
-                ListView.separated(
-                  shrinkWrap: true,
-                  physics: const BouncingScrollPhysics(),
-                  itemBuilder: (context, index) => DesireTile(
-                    desire: desires[index],
-                  ),
-                  itemCount: desires.length,
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(
-                      height: 20,
-                    );
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
+                AppTab(
+                  title: 'Yan',
+                  color: AppColors.maleColor,
                 ),
               ],
             ),
-            AddDesiresButtomsheet(
-              controller: controller,
-            )
-          ],
+            title: Center(child: TitleText(text: "Desires")),
+          ),
+          body: Stack(
+            alignment: Alignment.bottomRight,
+            children: [
+              TabBarView(
+                children: [
+                  generator(controller.listOfAllDiseres),
+                  generator(controller.listOfOurDiseres),
+                  generator(controller.listOfFemaleDiseres),
+                  generator(controller.listOfMaleDiseres),
+                ],
+              ),
+              AddDesiresButtomsheet(controller: controller),
+            ],
+          ),
         ),
       ),
     );

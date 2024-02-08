@@ -5,11 +5,9 @@ import 'package:image_picker/image_picker.dart';
 
 class FirebaseStorageService{
 
-
   FirebaseStorageService({required this.firebaseStorage});
   final FirebaseStorage firebaseStorage;
 
-  String imageId = "null";
   String imageLink = "null";
 
   Future<void> sendImage(XFile? _image) async {
@@ -17,9 +15,7 @@ class FirebaseStorageService{
         .now()
         .millisecondsSinceEpoch}.jpg";
 
-    Reference referenceRoot = firebaseStorage.ref();
-    Reference referenceDirImages = referenceRoot.child('desires');
-    Reference referenceToUpload = referenceDirImages.child(uniqueFileName);
+    Reference referenceToUpload = firebaseStorage.ref().child('desires').child(uniqueFileName);
 
     try {
       await referenceToUpload.putFile(File(_image!.path));
@@ -31,7 +27,6 @@ class FirebaseStorageService{
 
     referenceToUpload.putFile(File(_image!.path));
     imageLink = "null";
-    imageId = "null";
   }
 
 

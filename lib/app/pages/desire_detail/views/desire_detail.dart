@@ -33,8 +33,14 @@ class DesireDetail extends GetView<DesireDetailController> {
             const SizedBox(
               height: 20,
             ),
-            SizedBox(
-                height: 500, child: Image.network(controller.imageURL.value)),
+            (controller.imageURL.value != null &&
+                    controller.imageURL.value.isNotEmpty)
+                ? SizedBox(
+                    height: 500,
+                    child: Image.network(controller.imageURL.value),
+                  )
+                : const SizedBox(),
+            Text(controller.imageURL.value),
             Align(
               alignment: Alignment.centerLeft,
               child: TitleText(text: controller.title.value),

@@ -59,6 +59,10 @@ class DesireTile extends StatelessWidget {
                 value: isTyped.value,
                 onChanged: (value) {
                   checkboxValueUpdate(value);
+                  if (value == true) {
+
+
+                  }
                 },
               ),
             ),
