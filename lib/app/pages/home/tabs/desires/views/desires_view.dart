@@ -15,40 +15,51 @@ class Desires extends GetView<DesiresController> {
 
   Widget generator(Rx<List<Desire>?> listOfDesires) {
     return Padding(
-      padding: const EdgeInsets.all(14.0),
-      child: ListView(
-        children: [
-          const SizedBox(
-            height: 20,
-          ),
-          const Divider(),
-          const SizedBox(
-            height: 20,
-          ),
-          Obx(() {
-            if (listOfDesires.value == null) {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.red,
-                ),
-              ); // Экран загрузки
-            } else {
-              return ListView.separated(
-                shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (context, index) => DesireTile(
-                  desire: listOfDesires.value![index],
-                ),
-                itemCount: listOfDesires.value!.length,
-                separatorBuilder: (BuildContext context, int index) {
-                  return const SizedBox(
-                    height: 20,
-                  );
-                },
-              );
-            }
-          })
-        ],
+      padding: const EdgeInsets.fromLTRB(14, 14, 14, 0),
+      child: RefreshIndicator(
+        backgroundColor: AppColors.secondColor,
+        color: AppColors.cardColor,
+        onRefresh: () async {
+          await controller.getListsOfDesires();
+
+        },
+        child: ListView(
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            const Divider(),
+            const SizedBox(
+              height: 20,
+            ),
+            Obx(() {
+              if (listOfDesires.value == null) {
+                return const Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.red,
+                  ),
+                ); // Экран загрузки
+              } else {
+                return ListView.separated(
+                  shrinkWrap: true,
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (context, index) => DesireTile(
+                    desire: listOfDesires.value![index],
+                  ),
+                  itemCount: listOfDesires.value!.length,
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const SizedBox(
+                      height: 20,
+                    );
+                  },
+                );
+              }
+            }),
+            const SizedBox(
+              height: 20,
+            ),
+          ],
+        ),
       ),
     );
   }

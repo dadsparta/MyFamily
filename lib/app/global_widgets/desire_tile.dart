@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myfamily/app/pages/home/tabs/desires/controllers/desires_page_controller.dart';
 import 'package:myfamily/app/routes/app_pages.dart';
 import 'package:myfamily/core/consts/colors.dart';
 import 'package:myfamily/core/consts/texts.dart';
+import 'package:myfamily/core/services/main_services.dart';
 import 'package:myfamily/data/models/desire.dart';
 
 class DesireTile extends StatelessWidget {
   final Desire desire;
 
   late final RxString title = desire.title.obs;
+  late final RxString id = desire.id!.obs;
   late final RxString description = desire.description.obs;
   late final RxString imageUrl = desire.imagePath.obs;
   late final RxString gender = desire.creator.obs;
@@ -60,8 +63,7 @@ class DesireTile extends StatelessWidget {
                 onChanged: (value) {
                   checkboxValueUpdate(value);
                   if (value == true) {
-
-
+                    DesiresController().deleteDesire(imageUrl, id);
                   }
                 },
               ),

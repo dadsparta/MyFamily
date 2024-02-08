@@ -40,7 +40,6 @@ class DesireDetail extends GetView<DesireDetailController> {
                     child: Image.network(controller.imageURL.value),
                   )
                 : const SizedBox(),
-            Text(controller.imageURL.value),
             Align(
               alignment: Alignment.centerLeft,
               child: TitleText(text: controller.title.value),

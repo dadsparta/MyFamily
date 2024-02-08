@@ -10,7 +10,25 @@ import '../../core/consts/colors.dart';
 class AddDesiresButtomsheet extends StatelessWidget {
   DesiresController controller;
   List<String> _tags = ['Our', 'Hanna', 'Yan'];
+  List<String> genders = ['Own', 'female', 'male'];
   RxString _activeTag = ''.obs;
+
+  void addDesireFunction() {
+    if (_activeTag == 'Hanna') {
+      controller.creator = 'female';
+    } else if (_activeTag == "Yan") {
+      controller.creator = 'male';
+    } else {
+      controller.creator = 'Own';
+    }
+    controller.titleOfDesire = titleController!.text;
+    controller.descriptionOfDesire = descriptionController!.text;
+    controller.addDesire();
+    Get.back();
+  }
+
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
 
   AddDesiresButtomsheet({super.key, required this.controller});
 
@@ -34,32 +52,35 @@ class AddDesiresButtomsheet extends StatelessWidget {
                     height: 20,
                   ),
                   Obx(() => Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: _tags.map((tag) {
-                      return GestureDetector(
-                        onTap: () {
-                          if (_activeTag.value == tag) {
-                            _activeTag.value = '';
-                          } else {
-                            _activeTag.value = tag;
-                          }
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                          decoration: BoxDecoration(
-                            color: _activeTag.value == tag ? AppColors.cardColor : AppColors.togetherColor,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Text(tag),
-                        ),
-                      );
-                    }).toList(),
-                  )),
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: _tags.map((tag) {
+                          return GestureDetector(
+                            onTap: () {
+                              if (_activeTag.value == tag) {
+                                _activeTag.value = '';
+                              } else {
+                                _activeTag.value = tag;
+                              }
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 40, vertical: 10),
+                              decoration: BoxDecoration(
+                                color: _activeTag.value == tag
+                                    ? AppColors.cardColor
+                                    : AppColors.togetherColor,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Text(tag),
+                            ),
+                          );
+                        }).toList(),
+                      )),
                   const SizedBox(
                     height: 20,
                   ),
-                   TextField(
-                    controller: controller.titleDesireController,
+                  TextField(
+                    controller: titleController,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(
@@ -76,10 +97,9 @@ class AddDesiresButtomsheet extends StatelessWidget {
                     height: 20,
                   ),
                   TextField(
-                    controller: controller.descriptionDesireController,
-
+                    controller: descriptionController,
                     maxLines: 3,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(12),
@@ -98,11 +118,7 @@ class AddDesiresButtomsheet extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: IconButton(
                       onPressed: () {
-                        controller.creator = _activeTag.value;
-                        controller.addDesire();
-                        controller.titleDesireController.text = '';
-                        controller.descriptionDesireController.text = '';
-                        Get.back();
+                        addDesireFunction();
                       },
                       icon: const Icon(
                         Icons.send,

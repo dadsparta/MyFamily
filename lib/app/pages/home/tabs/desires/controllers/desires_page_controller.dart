@@ -1,8 +1,10 @@
 import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:myfamily/core/consts/colors.dart';
+import 'package:myfamily/core/services/firebase_storage_service.dart';
 import 'package:myfamily/core/services/main_services.dart';
 
 import '../../../../../../data/models/desire.dart';
@@ -11,9 +13,9 @@ class DesiresController extends GetxController {
   final ImagePicker imagePicker = ImagePicker();
   Rx<XFile?> image = Rx<XFile?>(null);
 
-  TextEditingController titleDesireController = TextEditingController();
-  TextEditingController descriptionDesireController = TextEditingController();
-  String creator = 'Our';
+  String titleOfDesire = '';
+  String descriptionOfDesire = '';
+  String creator = '';
   String imagePath = '';
 
   Rx<List<Desire>?> listOfAllDiseres = Rx<List<Desire>?>([]);
@@ -24,10 +26,10 @@ class DesiresController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getlistsOfDesires();
+    getListsOfDesires();
   }
 
-  Future<void> getlistsOfDesires() async {
+  Future<void> getListsOfDesires() async {
     listOfAllDiseres.value = await MainServices().getAllDesires();
     listOfMaleDiseres.value = await MainServices().getMaleDesires();
     listOfFemaleDiseres.value = await MainServices().getFemaleDesires();
@@ -35,15 +37,20 @@ class DesiresController extends GetxController {
   }
 
   Future<void> addDesire() async {
-    if (titleDesireController.text.isNotEmpty &&
-        descriptionDesireController.text.isNotEmpty &&
-        creator.isNotEmpty &&
-        imagePath.isNotEmpty) {
-      await MainServices().addDesire(Desire(
-          title: titleDesireController.text,
-          description: descriptionDesireController.text,
-          creator: creator,
-          imagePath: imagePath));
+    if (titleOfDesire != '' &&
+        descriptionOfDesire != '' &&
+        creator != '' &&
+        image.value != null) {
+      FirebaseStorageService firebaseStorageService = FirebaseStorageService(firebaseStorage: FirebaseStorage.instance);
+      await firebaseStorageService.sendImage(image.value);
+      String imagePath = firebaseStorageService.imageLink;
+      if (imagePath != "null") {
+        await MainServices().addDesire(Desire(
+            title: titleOfDesire,
+            description: descriptionOfDesire,
+            creator: creator,
+            imagePath: imagePath));
+      }
     }
   }
 
@@ -54,6 +61,20 @@ class DesiresController extends GetxController {
     } else {
       print('no image selected.');
     }
+    update();
+  }
+  void deleteDesire(RxString imageUrl, RxString id){
+    if (imageUrl.isNotEmpty && imageUrl != '') {
+      MainServices().deleteDesireWithImage(id.value, imageUrl.value);
+    }
+    else{
+      MainServices().deleteDesire(id.value);
+    }
+    update();
+  }
+
+  void deleteImage(){
+    image.value = null;
     update();
   }
 
@@ -87,8 +108,12 @@ class DesiresController extends GetxController {
                 top: 0,
                 right: 0,
                 child: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.delete),
+                  color: AppColors.addPanelColor,
+                  iconSize: 32,
+                  onPressed: () {
+                    deleteImage();
+                  },
+                  icon: const Icon(Icons.delete, color: AppColors.cardColor,),
                 ),
               ),
             ],
