@@ -9,6 +9,7 @@ import 'package:myfamily/data/models/desire.dart';
 
 class DesireTile extends StatelessWidget {
   final Desire desire;
+  final DesiresController controller;
 
   late final RxString title = desire.title.obs;
   late final RxString id = desire.id!.obs;
@@ -19,7 +20,7 @@ class DesireTile extends StatelessWidget {
   late final Color cardColor;
   RxBool isTyped = false.obs;
 
-  DesireTile({super.key, required this.desire}) {
+  DesireTile({super.key, required this.desire,required this.controller}) {
     switch (gender.value) {
       case 'male':
         cardColor = AppColors.maleColor;
@@ -63,7 +64,9 @@ class DesireTile extends StatelessWidget {
                 onChanged: (value) {
                   checkboxValueUpdate(value);
                   if (value == true) {
-                    DesiresController().deleteDesire(imageUrl, id);
+                    controller.deleteDesire(imageUrl, id);
+                    controller.update();
+
                   }
                 },
               ),

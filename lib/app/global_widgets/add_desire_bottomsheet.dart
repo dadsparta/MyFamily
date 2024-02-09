@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:myfamily/app/pages/home/tabs/desires/controllers/desires_page_controller.dart';
 import 'package:myfamily/core/consts/texts.dart';
 
@@ -9,8 +7,7 @@ import '../../core/consts/colors.dart';
 
 class AddDesiresButtomsheet extends StatelessWidget {
   DesiresController controller;
-  List<String> _tags = ['Our', 'Hanna', 'Yan'];
-  List<String> genders = ['Own', 'female', 'male'];
+  final List<String> _tags = ['Our', 'Hanna', 'Yan'];
   RxString _activeTag = ''.obs;
 
   void addDesireFunction() {
@@ -24,6 +21,10 @@ class AddDesiresButtomsheet extends StatelessWidget {
     controller.titleOfDesire = titleController!.text;
     controller.descriptionOfDesire = descriptionController!.text;
     controller.addDesire();
+    titleController.text = '';
+    descriptionController.text = '';
+    controller.deleteImage();
+    _activeTag = ''.obs;
     Get.back();
   }
 

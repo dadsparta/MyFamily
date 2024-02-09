@@ -18,10 +18,10 @@ class DesiresController extends GetxController {
   String creator = '';
   String imagePath = '';
 
-  Rx<List<Desire>?> listOfAllDiseres = Rx<List<Desire>?>([]);
-  Rx<List<Desire>?> listOfMaleDiseres = Rx<List<Desire>?>([]);
-  Rx<List<Desire>?> listOfFemaleDiseres = Rx<List<Desire>?>([]);
-  Rx<List<Desire>?> listOfOurDiseres = Rx<List<Desire>?>([]);
+  Rx<List<Desire>?> listOfAllDesires = Rx<List<Desire>?>([]);
+  Rx<List<Desire>?> listOfMaleDesires = Rx<List<Desire>?>([]);
+  Rx<List<Desire>?> listOfFemaleDesires = Rx<List<Desire>?>([]);
+  Rx<List<Desire>?> listOfOurDesires = Rx<List<Desire>?>([]);
 
   @override
   void onInit() {
@@ -30,10 +30,10 @@ class DesiresController extends GetxController {
   }
 
   Future<void> getListsOfDesires() async {
-    listOfAllDiseres.value = await MainServices().getAllDesires();
-    listOfMaleDiseres.value = await MainServices().getMaleDesires();
-    listOfFemaleDiseres.value = await MainServices().getFemaleDesires();
-    listOfOurDiseres.value = await MainServices().getOurDesires();
+    listOfAllDesires.value = await MainServices().getAllDesires();
+    listOfMaleDesires.value = await MainServices().getMaleDesires();
+    listOfFemaleDesires.value = await MainServices().getFemaleDesires();
+    listOfOurDesires.value = await MainServices().getOurDesires();
   }
 
   Future<void> addDesire() async {
@@ -52,6 +52,8 @@ class DesiresController extends GetxController {
             imagePath: imagePath));
       }
     }
+    getListsOfDesires();
+    update();
   }
 
   Future getImageFromGallery() async {
@@ -63,6 +65,7 @@ class DesiresController extends GetxController {
     }
     update();
   }
+
   void deleteDesire(RxString imageUrl, RxString id){
     if (imageUrl.isNotEmpty && imageUrl != '') {
       MainServices().deleteDesireWithImage(id.value, imageUrl.value);
@@ -70,6 +73,7 @@ class DesiresController extends GetxController {
     else{
       MainServices().deleteDesire(id.value);
     }
+    getListsOfDesires();
     update();
   }
 

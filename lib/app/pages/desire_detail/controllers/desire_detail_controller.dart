@@ -10,6 +10,7 @@ class DesireDetailController extends GetxController{
   late final RxString imageURL;
   late final Color cardColor;
 
+
   @override
   void onInit() {
     super.onInit();
@@ -18,5 +19,8 @@ class DesireDetailController extends GetxController{
     cardColor = args['cardColor'];
     description = args['description'];
     imageURL = args['imageURL'];
+    print(imageURL);
+
   }
+
 }

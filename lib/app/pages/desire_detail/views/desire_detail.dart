@@ -34,7 +34,7 @@ class DesireDetail extends GetView<DesireDetailController> {
               height: 20,
             ),
             (controller.imageURL.value != null &&
-                    controller.imageURL.value.isNotEmpty)
+                    controller.imageURL.value != 'null')
                 ? SizedBox(
                     height: 500,
                     child: Image.network(controller.imageURL.value),
