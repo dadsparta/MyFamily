@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import 'package:myfamily/app/data/app_injector.dart';
 import 'package:myfamily/app/routes/app_pages.dart';
-import 'package:myfamily/core/consts/colors.dart';
-import 'package:myfamily/core/services/firestore_controller.dart';
+import 'package:myfamily/core/theme/app_colors.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +11,6 @@ Future<void> main() async {
     DeviceOrientation.portraitUp,
   ]);
   await initInjector();
-  Get.put(FirestoreController());
   runApp(
     GetMaterialApp(
       title: "MyFamily",
@@ -31,7 +27,9 @@ Future<void> main() async {
       ),
       theme: ThemeData(
         useMaterial3: true,
-        textTheme: TextTheme(bodyMedium: TextStyle(color: AppColors.textColor)),
+        textTheme: const TextTheme(
+          bodyMedium: TextStyle(color: AppColors.textColor),
+        ),
         appBarTheme: const AppBarTheme(backgroundColor: AppColors.secondColor),
         dividerTheme: const DividerThemeData(
           color: AppColors.secondColor,
@@ -41,4 +39,3 @@ Future<void> main() async {
     ),
   );
 }
-

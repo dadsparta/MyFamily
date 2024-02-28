@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:myfamily/core/values/gender_types.dart';
 
 part 'desire.g.dart';
 
@@ -6,7 +7,7 @@ part 'desire.g.dart';
 class Desire {
   String title;
   String description;
-  String creator;
+  GenderTypes creator;
   String imagePath = 'null';
   String? id;
 

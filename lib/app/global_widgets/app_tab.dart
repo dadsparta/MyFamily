@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../../core/consts/colors.dart';
 
 class AppTab extends StatelessWidget {
   final String title;

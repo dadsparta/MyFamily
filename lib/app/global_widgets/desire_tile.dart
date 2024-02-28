@@ -1,32 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:myfamily/app/pages/home/tabs/desires/controllers/desires_page_controller.dart';
 import 'package:myfamily/app/routes/app_pages.dart';
-import 'package:myfamily/core/consts/colors.dart';
-import 'package:myfamily/core/consts/texts.dart';
-import 'package:myfamily/core/services/main_services.dart';
+import 'package:myfamily/core/theme/app_colors.dart';
+import 'package:myfamily/core/theme/texts.dart';
+import 'package:myfamily/core/values/gender_types.dart';
 import 'package:myfamily/data/models/desire.dart';
 
 class DesireTile extends StatelessWidget {
-  final Desire desire;
-  final DesiresController controller;
-
-  late final RxString title = desire.title.obs;
-  late final RxString id = desire.id!.obs;
-  late final RxString description = desire.description.obs;
-  late final RxString imageUrl = desire.imagePath.obs;
-  late final RxString gender = desire.creator.obs;
+  final Rx<Desire> desire;
+  final Function function;
 
   late final Color cardColor;
   RxBool isTyped = false.obs;
 
-  DesireTile({super.key, required this.desire,required this.controller}) {
-    switch (gender.value) {
-      case 'male':
+  DesireTile(
+      {super.key,
+      required this.desire,
+      required this.function}) {
+    switch (desire.value.creator) {
+      case GenderTypes.male:
         cardColor = AppColors.maleColor;
-      case 'Our':
+      case GenderTypes.Own:
         cardColor = AppColors.togetherColor;
-      case 'female':
+      case GenderTypes.female:
         cardColor = AppColors.femaleColor;
       default:
         cardColor = AppColors.togetherColor;
@@ -38,12 +34,7 @@ class DesireTile extends StatelessWidget {
   }
 
   void goToDetailPage() {
-    Get.toNamed(Routes.desireDetail, arguments: {
-      'title': title,
-      'cardColor': cardColor,
-      'description': description,
-      'imageURL': imageUrl
-    });
+    Get.toNamed(Routes.desireDetail, arguments: desire.value);
   }
 
   @override
@@ -64,15 +55,13 @@ class DesireTile extends StatelessWidget {
                 onChanged: (value) {
                   checkboxValueUpdate(value);
                   if (value == true) {
-                    controller.deleteDesire(imageUrl, id);
-                    controller.update();
-
+                    function();
                   }
                 },
               ),
             ),
             Expanded(
-              child: DesireSampleText(text: title.value),
+              child: AppText.desireSampleText(desire.value.title),
             ),
           ],
         ),

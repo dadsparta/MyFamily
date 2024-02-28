@@ -1,13 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:myfamily/app/global_widgets/add_desire_bottomsheet.dart';
 import 'package:myfamily/app/global_widgets/app_tab.dart';
 import 'package:myfamily/app/global_widgets/desire_tile.dart';
 import 'package:myfamily/app/pages/home/tabs/desires/controllers/desires_page_controller.dart';
-import 'package:myfamily/core/consts/colors.dart';
-import 'package:myfamily/core/consts/texts.dart';
+
+import 'package:myfamily/core/theme/app_colors.dart';
+import 'package:myfamily/core/theme/texts.dart';
 import 'package:myfamily/data/models/desire.dart';
 
 class Desires extends GetView<DesiresController> {
@@ -21,7 +20,6 @@ class Desires extends GetView<DesiresController> {
         color: AppColors.cardColor,
         onRefresh: () async {
           await controller.getListsOfDesires();
-
         },
         child: ListView(
           children: [
@@ -44,7 +42,8 @@ class Desires extends GetView<DesiresController> {
                   shrinkWrap: true,
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) => DesireTile(
-                    desire: listOfDesires.value![index], controller: controller,
+                    desire: listOfDesires.value![index].obs,
+                    function: (){},
                   ),
                   itemCount: listOfDesires.value!.length,
                   separatorBuilder: (BuildContext context, int index) {
@@ -102,7 +101,9 @@ class Desires extends GetView<DesiresController> {
                 ),
               ],
             ),
-            title: Center(child: TitleText(text: "Desires")),
+            title: Center(
+              child: AppText.title('Desires'),
+            ),
           ),
           body: Stack(
             alignment: Alignment.bottomRight,
@@ -110,12 +111,12 @@ class Desires extends GetView<DesiresController> {
               TabBarView(
                 children: [
                   generator(controller.listOfAllDesires),
-                  generator(controller.listOfOurDesires),
-                  generator(controller.listOfFemaleDesires),
-                  generator(controller.listOfMaleDesires),
+                  generator(controller.listOfAllDesires),
+                  generator(controller.listOfAllDesires),
+                  generator(controller.listOfAllDesires),
                 ],
               ),
-              AddDesiresButtomsheet(controller: controller),
+              AddDesiresBottomSheet(),
             ],
           ),
         ),

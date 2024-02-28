@@ -1,37 +1,97 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:myfamily/app/pages/home/tabs/desires/controllers/desires_page_controller.dart';
-import 'package:myfamily/core/consts/texts.dart';
+import 'package:myfamily/core/theme/app_colors.dart';
+import 'package:myfamily/core/theme/texts.dart';
+import 'package:myfamily/core/values/gender_types.dart';
+import 'package:myfamily/data/extantion/gender_type_translater.dart';
 
-import '../../core/consts/colors.dart';
+class AddDesiresBottomSheet extends GetView<DesiresController> {
+  final _activeTag = GenderTypes.Own.obs;
+  final ImagePicker imagePicker = ImagePicker();
+  Rx<XFile?> image = Rx<XFile?>(null);
+  AddDesiresBottomSheet({super.key});
 
-class AddDesiresButtomsheet extends StatelessWidget {
-  DesiresController controller;
-  final List<String> _tags = ['Our', 'Hanna', 'Yan'];
-  RxString _activeTag = ''.obs;
+  void removeImageFromPicker() {
+    image.value = null;
+    image.refresh();
+  }
+
+  Widget getImage() {
+    return Obx(() {
+      if (image.value == null) {
+        return IconButton(
+          onPressed: () {
+            getImageFromGallery();
+          },
+          color: AppColors.firstColor,
+          icon: const Icon(Icons.photo),
+        );
+      } else {
+        return Center(
+          child: Stack(
+            alignment: Alignment.topRight,
+            children: [
+              SizedBox(
+                height: 300,
+                child: GestureDetector(
+                  onTap: () {
+                    getImageFromGallery();
+                  },
+                  child: Image.file(
+                    File(image.value!.path),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 0,
+                right: 0,
+                child: IconButton(
+                  color: AppColors.addPanelColor,
+                  iconSize: 32,
+                  onPressed: () {
+                    removeImageFromPicker();
+                  },
+                  icon: const Icon(
+                    Icons.delete,
+                    color: AppColors.cardColor,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      }
+    });
+  }
 
   void addDesireFunction() {
-    if (_activeTag == 'Hanna') {
-      controller.creator = 'female';
-    } else if (_activeTag == "Yan") {
-      controller.creator = 'male';
-    } else {
-      controller.creator = 'Own';
-    }
-    controller.titleOfDesire = titleController!.text;
-    controller.descriptionOfDesire = descriptionController!.text;
-    controller.addDesire();
+    controller.creator = _activeTag.value.translate();
+    controller.titleOfDesire = titleController.text;
+    controller.descriptionOfDesire = descriptionController.text;
+    // controller.addDesire();
     titleController.text = '';
     descriptionController.text = '';
-    controller.deleteImage();
-    _activeTag = ''.obs;
+    removeImageFromPicker();
+    _activeTag.value = GenderTypes.Own;
     Get.back();
+  }
+
+  Future getImageFromGallery() async {
+    final simage = await imagePicker.pickImage(source: ImageSource.gallery);
+    if (simage != null) {
+      image.value = simage;
+    } else {
+      print('no image selected.');
+    }
   }
 
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
-  AddDesiresButtomsheet({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -44,39 +104,35 @@ class AddDesiresButtomsheet extends StatelessWidget {
               child: ListView(
                 padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                 children: [
-                  TitleText(text: 'Create desire'),
+                  AppText.title('Create desire'),
                   const SizedBox(
                     height: 20,
                   ),
-                  controller.getImage(),
+                  getImage(),
                   const SizedBox(
                     height: 20,
                   ),
-                  Obx(() => Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: _tags.map((tag) {
-                          return GestureDetector(
-                            onTap: () {
-                              if (_activeTag.value == tag) {
-                                _activeTag.value = '';
-                              } else {
-                                _activeTag.value = tag;
-                              }
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 40, vertical: 10),
-                              decoration: BoxDecoration(
-                                color: _activeTag.value == tag
-                                    ? AppColors.cardColor
-                                    : AppColors.togetherColor,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Text(tag),
+                  Obx(
+                    () => Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: GenderTypes.values.map((tag) {
+                        return GestureDetector(
+                          onTap: () => _activeTag.value = tag,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 40, vertical: 10),
+                            decoration: BoxDecoration(
+                              color: _activeTag.value == tag
+                                  ? AppColors.cardColor
+                                  : AppColors.togetherColor,
+                              borderRadius: BorderRadius.circular(20),
                             ),
-                          );
-                        }).toList(),
-                      )),
+                            child: Text(tag.translate()),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
                   const SizedBox(
                     height: 20,
                   ),
@@ -100,7 +156,7 @@ class AddDesiresButtomsheet extends StatelessWidget {
                   TextField(
                     controller: descriptionController,
                     maxLines: 3,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(12),

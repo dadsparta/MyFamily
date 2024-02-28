@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myfamily/app/pages/desire_detail/controllers/desire_detail_controller.dart';
-import 'package:myfamily/core/consts/colors.dart';
-import 'package:myfamily/core/consts/texts.dart';
+import 'package:myfamily/core/theme/app_colors.dart';
+import 'package:myfamily/core/theme/texts.dart';
 
 class DesireDetail extends GetView<DesireDetailController> {
   const DesireDetail({super.key});
@@ -33,8 +33,7 @@ class DesireDetail extends GetView<DesireDetailController> {
             const SizedBox(
               height: 20,
             ),
-            (controller.imageURL.value != null &&
-                    controller.imageURL.value != 'null')
+            (controller.imageURL.value != 'null')
                 ? SizedBox(
                     height: 500,
                     child: Image.network(controller.imageURL.value),
@@ -42,9 +41,9 @@ class DesireDetail extends GetView<DesireDetailController> {
                 : const SizedBox(),
             Align(
               alignment: Alignment.centerLeft,
-              child: TitleText(text: controller.title.value),
+              child: AppText.title(controller.title.value),
             ),
-            DescriptionText(text: controller.description.value)
+            AppText.description(controller.description.value)
           ],
         ),
       ),

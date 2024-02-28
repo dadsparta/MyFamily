@@ -31,12 +31,12 @@ dev_dependencies:
   json_serializable: ^6.7.1
   flutter_launcher_icons: ^0.13.1
   flutter_lints: ^2.0.0
-  skeleton_text:
 
 flutter_icons:
   android: true
   ios: true
   image_path: "assets/prev.png"
+
 flutter:
   uses-material-design: true
   assets:

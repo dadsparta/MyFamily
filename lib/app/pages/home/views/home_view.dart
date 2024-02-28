@@ -1,14 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
-import 'package:myfamily/app/global_widgets/add_desire_bottomsheet.dart';
 import 'package:myfamily/app/pages/home/controllers/home_controller.dart';
 import 'package:myfamily/app/pages/home/tabs/desires/views/desires_view.dart';
-import 'package:myfamily/core/consts/colors.dart';
+import 'package:myfamily/core/theme/app_colors.dart';
 
 import '../tabs/toghether_time/views/date_time_view.dart';
 
