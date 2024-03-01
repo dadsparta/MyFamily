@@ -5,18 +5,16 @@ import 'package:image_picker/image_picker.dart';
 
 class FirebaseStorageService extends GetxService{
 
+ String imageLink = "null";
+
   FirebaseStorageService({required this.firebaseStorage});
   final FirebaseStorage firebaseStorage;
-
-  String imageLink = "null";
 
   Future<void> sendImage(XFile? image) async {
     String uniqueFileName = "${DateTime
         .now()
         .millisecondsSinceEpoch}.jpg";
-
     Reference referenceToUpload = firebaseStorage.ref().child('desires').child(uniqueFileName);
-
     try {
       await referenceToUpload.putFile(File(image!.path));
       imageLink = await referenceToUpload.getDownloadURL();
@@ -24,10 +22,8 @@ class FirebaseStorageService extends GetxService{
     } catch (error) {
       print(error);
     }
-
     referenceToUpload.putFile(File(image!.path));
     imageLink = "null";
   }
-
 
 }

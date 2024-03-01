@@ -7,8 +7,8 @@ extension GenderTypeTranslater on GenderTypes{
         return 'Yan';
       case GenderTypes.female:
         return 'Hanna';
-      case GenderTypes.Own:
-        return 'Our';
+      case GenderTypes.Our:
+        return 'Own';
       default: return'';
     }
   }

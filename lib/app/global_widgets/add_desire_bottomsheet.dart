@@ -10,7 +10,7 @@ import 'package:myfamily/core/values/gender_types.dart';
 import 'package:myfamily/data/extantion/gender_type_translater.dart';
 
 class AddDesiresBottomSheet extends GetView<DesiresController> {
-  final _activeTag = GenderTypes.Own.obs;
+  final _activeTag = GenderTypes.Our.obs;
   final ImagePicker imagePicker = ImagePicker();
   Rx<XFile?> image = Rx<XFile?>(null);
   AddDesiresBottomSheet({super.key});
@@ -69,14 +69,14 @@ class AddDesiresBottomSheet extends GetView<DesiresController> {
   }
 
   void addDesireFunction() {
-    controller.creator = _activeTag.value.translate();
+    controller.creator = _activeTag.value;
     controller.titleOfDesire = titleController.text;
     controller.descriptionOfDesire = descriptionController.text;
-    // controller.addDesire();
+    controller.onAddDesire(image);
     titleController.text = '';
     descriptionController.text = '';
     removeImageFromPicker();
-    _activeTag.value = GenderTypes.Own;
+    _activeTag.value = GenderTypes.Our;
     Get.back();
   }
 

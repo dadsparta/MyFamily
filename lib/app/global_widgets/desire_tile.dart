@@ -13,14 +13,11 @@ class DesireTile extends StatelessWidget {
   late final Color cardColor;
   RxBool isTyped = false.obs;
 
-  DesireTile(
-      {super.key,
-      required this.desire,
-      required this.function}) {
+  DesireTile({super.key, required this.desire, required this.function}) {
     switch (desire.value.creator) {
       case GenderTypes.male:
         cardColor = AppColors.maleColor;
-      case GenderTypes.Own:
+      case GenderTypes.Our:
         cardColor = AppColors.togetherColor;
       case GenderTypes.female:
         cardColor = AppColors.femaleColor;
@@ -34,7 +31,13 @@ class DesireTile extends StatelessWidget {
   }
 
   void goToDetailPage() {
-    Get.toNamed(Routes.desireDetail, arguments: desire.value);
+    Get.toNamed(
+      Routes.desireDetail,
+      arguments: {
+        'desire': desire,
+        'cardColor' : cardColor
+      },
+    );
   }
 
   @override

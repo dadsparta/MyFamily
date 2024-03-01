@@ -10,7 +10,7 @@ class DesireDetail extends GetView<DesireDetailController> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: controller.cardColor),
+      color: controller.cardColor,
       child: SafeArea(
         child: ListView(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -33,17 +33,17 @@ class DesireDetail extends GetView<DesireDetailController> {
             const SizedBox(
               height: 20,
             ),
-            (controller.imageURL.value != 'null')
+            (controller.desire.value.imagePath != 'null')
                 ? SizedBox(
                     height: 500,
-                    child: Image.network(controller.imageURL.value),
+                    child: Image.network(controller.desire.value.imagePath),
                   )
                 : const SizedBox(),
             Align(
               alignment: Alignment.centerLeft,
-              child: AppText.title(controller.title.value),
+              child: AppText.title(controller.desire.value.title),
             ),
-            AppText.description(controller.description.value)
+            AppText.description(controller.desire.value.description)
           ],
         ),
       ),

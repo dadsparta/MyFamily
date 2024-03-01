@@ -43,7 +43,9 @@ class Desires extends GetView<DesiresController> {
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) => DesireTile(
                     desire: listOfDesires.value![index].obs,
-                    function: (){},
+                    function: () => controller.onDeleteDesire(
+                        listOfDesires.value![index].imagePath,
+                        listOfDesires.value![index].id!),
                   ),
                   itemCount: listOfDesires.value!.length,
                   separatorBuilder: (BuildContext context, int index) {
@@ -111,9 +113,9 @@ class Desires extends GetView<DesiresController> {
               TabBarView(
                 children: [
                   generator(controller.listOfAllDesires),
-                  generator(controller.listOfAllDesires),
-                  generator(controller.listOfAllDesires),
-                  generator(controller.listOfAllDesires),
+                  generator(controller.listOfOurDesires),
+                  generator(controller.listOfFemaleDesires),
+                  generator(controller.listOfMaleDesires),
                 ],
               ),
               AddDesiresBottomSheet(),

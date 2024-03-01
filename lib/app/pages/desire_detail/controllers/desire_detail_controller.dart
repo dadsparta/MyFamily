@@ -1,25 +1,19 @@
-import 'dart:ui';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myfamily/data/models/desire.dart';
 
 class DesireDetailController extends GetxController{
   late final Map<String, dynamic> args;
-  late final RxString title;
-  late final RxString description;
-  late final RxString imageURL;
-  late final Color cardColor;
+  late final Rx<Desire> desire;
+  late final cardColor;
+
 
 
   @override
   void onInit() {
     super.onInit();
     args = Get.arguments;
-    title = args['title'];
+    desire = args['desire'];
     cardColor = args['cardColor'];
-    description = args['description'];
-    imageURL = args['imageURL'];
-    print(imageURL);
-
   }
 
 }
