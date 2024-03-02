@@ -47,7 +47,7 @@ class AppText extends Text {
           fontSize: 22,
           fontWeight: FontWeight.w400,
           color: color,
-          textAlign: textAlign);
+          textAlign: textAlign,);
 
   factory AppText.desireSampleText(String text, {
     Color color = AppColors.textColor,
@@ -62,7 +62,7 @@ class AppText extends Text {
 
   factory AppText.dateTimeText(String text, {
     Color color = const Color(0xFFD7AE0D),
-    TextAlign textAlign = TextAlign.start
+    TextAlign textAlign = TextAlign.center
   }) =>
       AppText(text,
           fontSize: 24,

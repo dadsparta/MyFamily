@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myfamily/app/pages/home/controllers/home_controller.dart';
 import 'package:myfamily/app/pages/home/tabs/desires/views/desires_view.dart';
+import 'package:myfamily/app/pages/home/tabs/settings/view/settings_view.dart';
 import 'package:myfamily/core/theme/app_colors.dart';
 
 import '../tabs/toghether_time/views/date_time_view.dart';
 
 class HomeView extends GetView<HomeController> {
-  final pages = [Desires(), const TogetherTime()];
+  final pages = [Desires(), const TogetherTime(), Settings()];
 
   HomeView({super.key});
 
@@ -17,13 +18,13 @@ class HomeView extends GetView<HomeController> {
     return Obx(
       () => Scaffold(
         body: Container(
-          decoration: controller.selectedPageIndex.value == 0
-              ? const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/images/background.jpg'),
-                      fit: BoxFit.cover),
-                )
-              : const BoxDecoration(color: Colors.black),
+          decoration: controller.selectedPageIndex.value == 1
+              ? const BoxDecoration(color: Colors.black)
+              : const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/images/background.jpg'),
+                fit: BoxFit.cover),
+          ),
           child: PageView.builder(
             itemCount: pages.length,
             controller: controller.pageController,
@@ -51,6 +52,10 @@ class HomeView extends GetView<HomeController> {
               BottomNavigationBarItem(
                 icon: Icon(CupertinoIcons.heart_fill),
                 label: 'Time',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                label: 'Settings',
               )
             ],
           ),

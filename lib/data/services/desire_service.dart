@@ -31,7 +31,9 @@ class DesireService extends GetxService {
     desire.id = doc.id;
     doc.update(desire.toJson());
   }
-  Future<void> addDesire(Rx<XFile?> image, String titleOfDesire, String descriptionOfDesire, GenderTypes creator) async {
+
+  Future<void> addDesire(Rx<XFile?> image, String titleOfDesire,
+      String descriptionOfDesire, GenderTypes creator) async {
     if (titleOfDesire != '' &&
         descriptionOfDesire != '' &&
         creator != '' &&
@@ -40,14 +42,17 @@ class DesireService extends GetxService {
       String imagePath = firebaseStorageService.imageLink;
 
       if (imagePath != "null") {
-        await sendDesire(Desire(
-            title: titleOfDesire,
-            description: descriptionOfDesire,
-            creator: creator,
-            imagePath: imagePath));
+        await sendDesire(
+          Desire(
+              title: titleOfDesire,
+              description: descriptionOfDesire,
+              creator: creator,
+              imagePath: imagePath),
+        );
       }
     }
   }
+
   Future<void> deleteDesire(String id) async {
     collection.doc(id).delete();
   }

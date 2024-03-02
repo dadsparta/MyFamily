@@ -8,6 +8,7 @@ import 'package:myfamily/app/pages/home/tabs/desires/controllers/desires_page_co
 import 'package:myfamily/core/theme/app_colors.dart';
 import 'package:myfamily/core/theme/texts.dart';
 import 'package:myfamily/data/models/desire.dart';
+import 'package:myfamily/generated/locales.g.dart';
 
 class Desires extends GetView<DesiresController> {
   Desires({super.key});
@@ -69,58 +70,50 @@ class Desires extends GetView<DesiresController> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 4,
-      child: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/background.jpg'),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Scaffold(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
           backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            bottom: const TabBar(
-              dividerColor: Colors.transparent,
-              indicatorColor: AppColors.cardColor,
-              labelColor: AppColors.cardColor,
-              tabs: [
-                AppTab(
-                  title: 'All',
-                  color: AppColors.togetherColor,
-                ),
-                AppTab(
-                  title: 'Our',
-                  color: AppColors.togetherColor,
-                ),
-                AppTab(
-                  title: 'Hanna',
-                  color: AppColors.femaleColor,
-                ),
-                AppTab(
-                  title: 'Yan',
-                  color: AppColors.maleColor,
-                ),
-              ],
-            ),
-            title: Center(
-              child: AppText.title('Desires'),
-            ),
-          ),
-          body: Stack(
-            alignment: Alignment.bottomRight,
-            children: [
-              TabBarView(
-                children: [
-                  generator(controller.listOfAllDesires),
-                  generator(controller.listOfOurDesires),
-                  generator(controller.listOfFemaleDesires),
-                  generator(controller.listOfMaleDesires),
-                ],
+          bottom: TabBar(
+            dividerColor: Colors.transparent,
+            indicatorColor: AppColors.cardColor,
+            labelColor: AppColors.cardColor,
+            tabs: [
+              AppTab(
+                title: LocaleKeys.tab_all.tr,
+                color: AppColors.togetherColor,
               ),
-              AddDesiresBottomSheet(),
+              AppTab(
+                title: LocaleKeys.tab_our.tr,
+                color: AppColors.togetherColor,
+              ),
+              AppTab(
+                title: LocaleKeys.tab_female.tr,
+                color: AppColors.femaleColor,
+              ),
+              AppTab(
+                title: LocaleKeys.tab_male.tr,
+                color: AppColors.maleColor,
+              ),
             ],
           ),
+          title: Center(
+            child: AppText.title(LocaleKeys.desires.tr),
+          ),
+        ),
+        body: Stack(
+          alignment: Alignment.bottomRight,
+          children: [
+            TabBarView(
+              children: [
+                generator(controller.listOfAllDesires),
+                generator(controller.listOfOurDesires),
+                generator(controller.listOfFemaleDesires),
+                generator(controller.listOfMaleDesires),
+              ],
+            ),
+            AddDesiresBottomSheet(),
+          ],
         ),
       ),
     );

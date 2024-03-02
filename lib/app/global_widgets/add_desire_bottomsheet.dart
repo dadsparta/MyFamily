@@ -8,6 +8,7 @@ import 'package:myfamily/core/theme/app_colors.dart';
 import 'package:myfamily/core/theme/texts.dart';
 import 'package:myfamily/core/values/gender_types.dart';
 import 'package:myfamily/data/extantion/gender_type_translater.dart';
+import 'package:myfamily/generated/locales.g.dart';
 
 class AddDesiresBottomSheet extends GetView<DesiresController> {
   final _activeTag = GenderTypes.Our.obs;
@@ -104,7 +105,7 @@ class AddDesiresBottomSheet extends GetView<DesiresController> {
               child: ListView(
                 padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                 children: [
-                  AppText.title('Create desire'),
+                  AppText.title(LocaleKeys.create_desire.tr),
                   const SizedBox(
                     height: 20,
                   ),
@@ -138,15 +139,15 @@ class AddDesiresBottomSheet extends GetView<DesiresController> {
                   ),
                   TextField(
                     controller: titleController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(
+                    decoration:  InputDecoration(
+                      border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(12),
                         ),
                       ),
                       label: Text(
-                        'Введите название желания',
-                        style: TextStyle(color: AppColors.textColor),
+                        LocaleKeys.input_desire_title.tr,
+                        style: const TextStyle(color: AppColors.textColor),
                       ),
                     ),
                   ),
@@ -156,15 +157,15 @@ class AddDesiresBottomSheet extends GetView<DesiresController> {
                   TextField(
                     controller: descriptionController,
                     maxLines: 3,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(12),
                         ),
                       ),
                       label: Text(
-                        'Введите описание желания',
-                        style: TextStyle(color: AppColors.textColor),
+                        LocaleKeys.input_desire_description.tr,
+                        style: const TextStyle(color: AppColors.textColor),
                       ),
                     ),
                   ),

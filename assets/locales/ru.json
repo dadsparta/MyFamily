@@ -1,0 +1,17 @@
+{
+  "ru": "Русский",
+  "en": "Английский",
+  "googleSignIn": "Авторизироваться через гугл",
+  "language": "Язык",
+  "main": "Главная",
+  "desires": "Желания",
+  "settings": "Настройки",
+  "time_together_prev": "Мы вместе уже",
+  "create_desire": "Создать желание",
+  "tab_all": "Все",
+  "tab_female": "Аня",
+  "tab_male": "Ваня",
+  "tab_our": "Общее",
+  "input_desire_title": "Введите название желания",
+  "input_desire_description": "Введите описание желания"
+}

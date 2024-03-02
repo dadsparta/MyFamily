@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:myfamily/app/data/app_injector.dart';
 import 'package:myfamily/app/routes/app_pages.dart';
 import 'package:myfamily/core/theme/app_colors.dart';
+import 'package:myfamily/generated/locales.g.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,6 +18,8 @@ Future<void> main() async {
       getPages: AppPages.routes,
       defaultTransition: Transition.cupertino,
       initialRoute: Routes.home,
+      locale: Locale('en'),
+      translationsKeys: AppTranslation.translations,
       builder: (context, page) => GestureDetector(
         onTap: () {
           FocusScope.of(context).requestFocus(
