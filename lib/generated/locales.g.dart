@@ -21,9 +21,9 @@ class LocaleKeys {
   static const time_together_prev = 'time_together_prev';
   static const create_desire = 'create_desire';
   static const tab_all = 'tab_all';
-  static const tab_female = 'tab_female';
-  static const tab_male = 'tab_male';
-  static const tab_our = 'tab_our';
+  static const tab_first = 'tab_first';
+  static const tab_second = 'tab_second';
+  static const tab_third = 'tab_third';
   static const input_desire_title = 'input_desire_title';
   static const input_desire_description = 'input_desire_description';
 }
@@ -40,9 +40,9 @@ class Locales {
     'time_together_prev': 'We have been together for',
     'create_desire': 'Create desire',
     'tab_all': 'all',
-    'tab_female': 'Hanna',
-    'tab_male': 'Yan',
-    'tab_our': 'Our',
+    'tab_first': 'first',
+    'tab_second': 'second',
+    'tab_third': 'third',
     'input_desire_title': 'Write desire title',
     'input_desire_description': 'Write desire description',
   };
@@ -57,9 +57,9 @@ class Locales {
     'time_together_prev': 'Мы вместе уже',
     'create_desire': 'Создать желание',
     'tab_all': 'Все',
-    'tab_female': 'Аня',
-    'tab_male': 'Ваня',
-    'tab_our': 'Общее',
+    'tab_first': 'первый',
+    'tab_second': 'второй',
+    'tab_third': 'третий',
     'input_desire_title': 'Введите название желания',
     'input_desire_description': 'Введите описание желания',
   };

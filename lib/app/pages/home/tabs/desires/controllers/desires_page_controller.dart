@@ -1,23 +1,23 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:myfamily/app/data/models/desire.dart';
+import 'package:myfamily/app/data/services/desire_service.dart';
 import 'package:myfamily/core/values/gender_types.dart';
-import 'package:myfamily/data/models/desire.dart';
-import 'package:myfamily/data/services/desire_service.dart';
 
 
 
 class DesiresController extends GetxController {
 
+  late StreamController desiresStream;
   String titleOfDesire = '';
   String descriptionOfDesire = '';
-  GenderTypes creator = GenderTypes.Our;
+  GenderTypes creator = GenderTypes.first;
   String imagePath = '';
 
   Rx<List<Desire>?> listOfAllDesires = Rx<List<Desire>?>([]);
-  Rx<List<Desire>?> listOfMaleDesires = Rx<List<Desire>?>([]);
-  Rx<List<Desire>?> listOfFemaleDesires = Rx<List<Desire>?>([]);
-  Rx<List<Desire>?> listOfOurDesires = Rx<List<Desire>?>([]);
 
   @override
   void onInit() {
@@ -27,29 +27,23 @@ class DesiresController extends GetxController {
 
   Future<void> getListsOfDesires() async {
     listOfAllDesires.value = await DesireService(FirebaseFirestore.instance).getAllDesires();
-    sortingOfAllDesires();
+    update();
   }
 
-  void sortingOfAllDesires(){
-    clearSortingLists();
-    listOfAllDesires.value?.forEach((desire) {
-      if (desire.creator == GenderTypes.male) {
-        listOfMaleDesires.value?.add(desire);
-      } else if (desire.creator == GenderTypes.female) {
-        listOfFemaleDesires.value?.add(desire);
-      } else if (desire.creator == GenderTypes.Our) {
-        listOfOurDesires.value?.add(desire);
-      }
-      else{
-        listOfOurDesires.value?.add(desire);
-      }
-    });
+  RxList<Desire> sortAndFilterDesires(GenderTypes desiredType) {
+    while (listOfAllDesires.value == null) {
+      return RxList<Desire>();
+    }
+
+    List<Desire> filteredList = listOfAllDesires.value!
+        .where((desire) => desire.creator == desiredType)
+        .toList();
+
+    filteredList.sort((a, b) => a.creator.toString().compareTo(b.creator.toString()));
+
+    return RxList<Desire>(filteredList);
   }
-  void clearSortingLists() {
-    listOfMaleDesires.value?.clear();
-    listOfFemaleDesires.value?.clear();
-    listOfOurDesires.value?.clear();
-  }
+
 
   Future<void> onAddDesire(Rx<XFile?> image) async{
     await DesireService(FirebaseFirestore.instance).addDesire(image, titleOfDesire, descriptionOfDesire, creator);

@@ -22,7 +22,7 @@ Map<String, dynamic> _$DesireToJson(Desire instance) => <String, dynamic>{
     };
 
 const _$GenderTypesEnumMap = {
-  GenderTypes.male: 'male',
-  GenderTypes.female: 'female',
-  GenderTypes.Our: 'Own',
+  GenderTypes.first: 'first',
+  GenderTypes.second: 'second',
+  GenderTypes.third: 'third',
 };

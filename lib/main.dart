@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:myfamily/app/data/app_injector.dart';
+import 'package:myfamily/app/injectors/app_injector.dart';
 import 'package:myfamily/app/routes/app_pages.dart';
 import 'package:myfamily/core/theme/app_colors.dart';
 import 'package:myfamily/generated/locales.g.dart';

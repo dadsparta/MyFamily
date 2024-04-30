@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:myfamily/app/data/models/desire.dart';
+import 'package:myfamily/app/data/services/firebase_storage_service.dart';
 import 'package:myfamily/core/values/gender_types.dart';
-import 'package:myfamily/data/models/desire.dart';
-import 'package:myfamily/data/services/firebase_storage_service.dart';
 
 class DesireService extends GetxService {
   FirebaseStorageService firebaseStorageService =
@@ -13,7 +13,7 @@ class DesireService extends GetxService {
   late CollectionReference collection;
 
   DesireService(this.firestore) {
-    collection = firestore.collection('General');
+    collection = firestore.collection('fordemo');
   }
 
   Future<List<Desire>?> getAllDesires() async {

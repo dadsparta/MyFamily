@@ -9,9 +9,9 @@
   "time_together_prev": "We have been together for",
   "create_desire": "Create desire",
   "tab_all": "all",
-  "tab_female": "Hanna",
-  "tab_male": "Yan",
-  "tab_our": "Our",
+  "tab_first": "first",
+  "tab_second": "second",
+  "tab_third": "third",
   "input_desire_title": "Write desire title",
   "input_desire_description": "Write desire description"
 }

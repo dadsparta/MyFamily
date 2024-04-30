@@ -3,15 +3,15 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:myfamily/app/data/extantion/gender_type_translater.dart';
 import 'package:myfamily/app/pages/home/tabs/desires/controllers/desires_page_controller.dart';
 import 'package:myfamily/core/theme/app_colors.dart';
 import 'package:myfamily/core/theme/texts.dart';
 import 'package:myfamily/core/values/gender_types.dart';
-import 'package:myfamily/data/extantion/gender_type_translater.dart';
 import 'package:myfamily/generated/locales.g.dart';
 
 class AddDesiresBottomSheet extends GetView<DesiresController> {
-  final _activeTag = GenderTypes.Our.obs;
+  final _activeTag = GenderTypes.first.obs;
   final ImagePicker imagePicker = ImagePicker();
   Rx<XFile?> image = Rx<XFile?>(null);
   AddDesiresBottomSheet({super.key});
@@ -77,7 +77,7 @@ class AddDesiresBottomSheet extends GetView<DesiresController> {
     titleController.text = '';
     descriptionController.text = '';
     removeImageFromPicker();
-    _activeTag.value = GenderTypes.Our;
+    _activeTag.value = GenderTypes.first;
     Get.back();
   }
 

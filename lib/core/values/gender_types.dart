@@ -1,5 +1,5 @@
 enum GenderTypes {
-  male,
-  female,
-  Our
+  first,
+  second,
+  third
 }

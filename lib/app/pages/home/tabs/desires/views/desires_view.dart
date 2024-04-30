@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myfamily/app/data/models/desire.dart';
 import 'package:myfamily/app/global_widgets/add_desire_bottomsheet.dart';
 import 'package:myfamily/app/global_widgets/app_tab.dart';
 import 'package:myfamily/app/global_widgets/desire_tile.dart';
@@ -7,11 +8,12 @@ import 'package:myfamily/app/pages/home/tabs/desires/controllers/desires_page_co
 
 import 'package:myfamily/core/theme/app_colors.dart';
 import 'package:myfamily/core/theme/texts.dart';
-import 'package:myfamily/data/models/desire.dart';
+import 'package:myfamily/core/values/gender_types.dart';
 import 'package:myfamily/generated/locales.g.dart';
 
 class Desires extends GetView<DesiresController> {
-  Desires({super.key});
+
+  const Desires({super.key});
 
   Widget generator(Rx<List<Desire>?> listOfDesires) {
     return Padding(
@@ -84,15 +86,15 @@ class Desires extends GetView<DesiresController> {
                 color: AppColors.togetherColor,
               ),
               AppTab(
-                title: LocaleKeys.tab_our.tr,
+                title: LocaleKeys.tab_first.tr,
                 color: AppColors.togetherColor,
               ),
               AppTab(
-                title: LocaleKeys.tab_female.tr,
+                title: LocaleKeys.tab_second.tr,
                 color: AppColors.femaleColor,
               ),
               AppTab(
-                title: LocaleKeys.tab_male.tr,
+                title: LocaleKeys.tab_third.tr,
                 color: AppColors.maleColor,
               ),
             ],
@@ -104,13 +106,15 @@ class Desires extends GetView<DesiresController> {
         body: Stack(
           alignment: Alignment.bottomRight,
           children: [
-            TabBarView(
-              children: [
-                generator(controller.listOfAllDesires),
-                generator(controller.listOfOurDesires),
-                generator(controller.listOfFemaleDesires),
-                generator(controller.listOfMaleDesires),
-              ],
+            Obx(
+                ()=> TabBarView(
+                children: [
+                  generator(controller.listOfAllDesires),
+                  generator(controller.sortAndFilterDesires(GenderTypes.first).obs),
+                  generator(controller.sortAndFilterDesires(GenderTypes.second).obs),
+                  generator(controller.sortAndFilterDesires(GenderTypes.third).obs),
+                ],
+              ),
             ),
             AddDesiresBottomSheet(),
           ],

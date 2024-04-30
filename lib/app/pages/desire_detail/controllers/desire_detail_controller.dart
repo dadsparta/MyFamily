@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:myfamily/data/models/desire.dart';
+import 'package:myfamily/app/data/models/desire.dart';
 
 class DesireDetailController extends GetxController{
   late final Map<String, dynamic> args;

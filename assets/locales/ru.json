@@ -9,9 +9,9 @@
   "time_together_prev": "Мы вместе уже",
   "create_desire": "Создать желание",
   "tab_all": "Все",
-  "tab_female": "Аня",
-  "tab_male": "Ваня",
-  "tab_our": "Общее",
+  "tab_first": "первый",
+  "tab_second": "второй",
+  "tab_third": "третий",
   "input_desire_title": "Введите название желания",
   "input_desire_description": "Введите описание желания"
 }
